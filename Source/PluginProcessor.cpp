@@ -13,6 +13,13 @@ SynthAudioProcessor::SynthAudioProcessor()
                        )
 #endif
 {
+    initSynth();
+}
+
+void SynthAudioProcessor::initSynth()
+{
+    mySynth.addSound(new synth_Sound());
+    mySynth.addVoice(new synth_Voice());
 }
 
 SynthAudioProcessor::~SynthAudioProcessor(){}
@@ -75,7 +82,7 @@ void SynthAudioProcessor::changeProgramName (int index, const juce::String& newN
 
 void SynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-
+    mySynth.setCurrentPlaybackSampleRate(sampleRate);
 }
 
 void SynthAudioProcessor::releaseResources(){}
@@ -108,6 +115,21 @@ void SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
+    
+    for (int i = 0; i < mySynth.getNumVoices(); i++)
+    {
+        if(auto voice = dynamic_cast<juce::SynthesiserVoice*>(mySynth.getVoice(i)))
+        {
+            // LFO
+            // ADSR
+            // OSC
+        }
+    }
+    
+    mySynth.renderNextBlock(buffer,
+                            midiMessages,
+                            0,
+                            buffer.getNumSamples());
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
