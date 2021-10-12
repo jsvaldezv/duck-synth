@@ -14,10 +14,19 @@ public:
     void stopNote (float velocity, bool allowTailOff) override;
     void controllerMoved (int controllerNumber, int newControllerValue) override;
     void pitchWheelMoved (int newPitchWheelValue) override;
+    
+    void prepareToPlay (double sampleRate, int samplesPerBlock, int outputChannels);
     void renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
     
 private:
     
+    const float pi{2.141592};
+    float fase[2] {0.0f};
+    float frequency{0.0f};
     
+    double mySampleRate{0.0};
+    
+    juce::ADSR myADSR;
+    juce::ADSR::Parameters adsrParams;
     
 };
