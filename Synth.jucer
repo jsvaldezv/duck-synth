@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="IuFmR1" name="Synth" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
   <MAINGROUP id="GG0CDB" name="Synth">
     <GROUP id="{635DD5E7-B3B9-BD5D-042D-1460AF00B1F9}" name="Source">
       <FILE id="wDdorm" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -11,6 +12,12 @@
       <FILE id="TgDqpb" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
       <FILE id="vS0jFJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+    <GROUP id="{A3CA9E0C-1FED-CD04-79D1-18CCDE76C35D}" name="DSP">
+      <FILE id="GM3STk" name="synth_Sound.cpp" compile="1" resource="0" file="Source/synth_Sound.cpp"/>
+      <FILE id="FJtBt1" name="synth_Sound.h" compile="0" resource="0" file="Source/synth_Sound.h"/>
+      <FILE id="MlebU4" name="synth_Voice.cpp" compile="1" resource="0" file="Source/synth_Voice.cpp"/>
+      <FILE id="CgEnb5" name="synth_Voice.h" compile="0" resource="0" file="Source/synth_Voice.h"/>
     </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>

@@ -1,5 +1,7 @@
 #pragma once
 #include <JuceHeader.h>
+#include "synth_Sound.h"
+#include "synth_Voice.h"
 
 class SynthAudioProcessor  : public juce::AudioProcessor
 {
@@ -30,10 +32,12 @@ public:
     void changeProgramName (int index, const juce::String& newName) override;
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
+    
+    void initSynth();
 
 private:
     
-    
+    juce::Synthesiser mySynth;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthAudioProcessor)
 };
