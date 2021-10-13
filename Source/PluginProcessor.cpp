@@ -83,6 +83,12 @@ void SynthAudioProcessor::changeProgramName (int index, const juce::String& newN
 void SynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     mySynth.setCurrentPlaybackSampleRate(sampleRate);
+    
+    for(int i = 0; i < mySynth.getNumVoices(); i++)
+    {
+        if(auto voice = dynamic_cast<synth_Voice*>(mySynth.getVoice(i)))
+            voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+    }
 }
 
 void SynthAudioProcessor::releaseResources(){}
