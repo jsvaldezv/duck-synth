@@ -14,10 +14,37 @@ public:
     void stopNote (float velocity, bool allowTailOff) override;
     void controllerMoved (int controllerNumber, int newControllerValue) override;
     void pitchWheelMoved (int newPitchWheelValue) override;
+    
+    void prepareToPlay (double sampleRate, int samplesPerBlock, int outputChannels);
     void renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
     
 private:
     
+    double mySampleRate{0.0};
     
+    const float pi{3.141592};
+    float fase[2] {0.0f};
+    float frequency{0.0f};
+    
+    juce::ADSR myADSR;
+    juce::ADSR::Parameters adsrParams;
+    
+};
+
+class Animales
+{
+public:
+    
+    Animales();
+    ~Animales();
+    
+    void setColor();
+    void setSize();
+    
+    int count;
+    
+private:
+    
+    int pi;
     
 };
