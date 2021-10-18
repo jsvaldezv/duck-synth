@@ -14,6 +14,10 @@
       <FILE id="vS0jFJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{A3CA9E0C-1FED-CD04-79D1-18CCDE76C35D}" name="DSP">
+      <FILE id="R3lf7L" name="synth_Delay.cpp" compile="1" resource="0" file="Source/synth_Delay.cpp"/>
+      <FILE id="wTw8X1" name="synth_Delay.h" compile="0" resource="0" file="Source/synth_Delay.h"/>
+      <FILE id="Cc6MhJ" name="synth_OSC.cpp" compile="1" resource="0" file="Source/synth_OSC.cpp"/>
+      <FILE id="dmo1AY" name="synth_OSC.h" compile="0" resource="0" file="Source/synth_OSC.h"/>
       <FILE id="GM3STk" name="synth_Sound.cpp" compile="1" resource="0" file="Source/synth_Sound.cpp"/>
       <FILE id="FJtBt1" name="synth_Sound.h" compile="0" resource="0" file="Source/synth_Sound.h"/>
       <FILE id="MlebU4" name="synth_Voice.cpp" compile="1" resource="0" file="Source/synth_Voice.cpp"/>
@@ -40,6 +44,7 @@
         <MODULEPATH id="juce_graphics" path="../../Documents/Programming/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../../Documents/Programming/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../../Documents/Programming/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../../JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -53,6 +58,7 @@
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

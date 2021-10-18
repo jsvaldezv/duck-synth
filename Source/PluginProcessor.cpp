@@ -10,10 +10,61 @@ SynthAudioProcessor::SynthAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), parameters(*this, nullptr, "PARAMETERS", initializeGUI())
 #endif
 {
     initSynth();
+}
+
+juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initializeGUI()
+{
+    std::vector <std::unique_ptr<juce::RangedAudioParameter>> params;
+    
+    //VOLUMEN SLIDER
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("VOLUME_ID",
+                                                                 "VOLUME_NAME",
+                                                                 0.0f,
+                                                                 1.0f,
+                                                                 0.5f));
+    
+    //ATTACK SLIDER
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK_ID",
+                                                                 "ATTACK_NAME",
+                                                                 0.1f,
+                                                                 3.0f,
+                                                                 0.5f));
+    //SUSTAIN SLIDER
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN_ID",
+                                                                 "SUSTAIN_NAME",
+                                                                 0.1f,
+                                                                 3.0f,
+                                                                 0.5f));
+    //DECAY SLIDER
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY_ID",
+                                                                 "DECAY_NAME",
+                                                                 0.1f,
+                                                                 3.0f,
+                                                                 0.5f));
+    //RELEASE SLIDER
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE_ID",
+                                                                 "RELEASE_NAME",
+                                                                 0.1f,
+                                                                 3.0f,
+                                                                 0.5f));
+    //DELAY TIME SLIDER
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("TIME_ID",
+                                                                 "TIME_NAME",
+                                                                 0.1f,
+                                                                 3.0f,
+                                                                 0.5f));
+    //FEEDBACK SLIDER
+    params.push_back(std::make_unique<juce::AudioParameterFloat>("FEEDBACK_ID",
+                                                                 "FEEDBACK_NAME",
+                                                                 0.01f,
+                                                                 0.99f,
+                                                                 0.5f));
+    
+    return {params.begin(),params.end()};
 }
 
 void SynthAudioProcessor::initSynth()
@@ -124,11 +175,15 @@ void SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
     
     for (int i = 0; i < mySynth.getNumVoices(); i++)
     {
-        if(auto voice = dynamic_cast<juce::SynthesiserVoice*>(mySynth.getVoice(i)))
+        if(auto voice = dynamic_cast<synth_Voice*>(mySynth.getVoice(i)))
         {
-            // LFO
-            // ADSR
-            // OSC
+            voice->getParams(*parameters.getRawParameterValue("VOLUME_ID"),
+                             *parameters.getRawParameterValue("ATTACK_ID"),
+                             *parameters.getRawParameterValue("DECAY_ID"),
+                             *parameters.getRawParameterValue("SUSTAIN_ID"),
+                             *parameters.getRawParameterValue("RELEASE_ID"),
+                             *parameters.getRawParameterValue("TIME_ID"),
+                             *parameters.getRawParameterValue("FEEDBACK_ID"));
         }
     }
     
@@ -136,11 +191,6 @@ void SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                             midiMessages,
                             0,
                             buffer.getNumSamples());
-
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        //auto* channelData = buffer.getWritePointer (channel);
-    }
 }
 
 bool SynthAudioProcessor::hasEditor() const
