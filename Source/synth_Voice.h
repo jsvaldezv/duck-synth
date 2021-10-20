@@ -1,6 +1,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "synth_Sound.h"
+#include "synth_OSC.h"
 
 class synth_Voice : public juce::SynthesiserVoice
 {
@@ -29,22 +30,7 @@ private:
     juce::ADSR myADSR;
     juce::ADSR::Parameters adsrParams;
     
-};
-
-class Animales
-{
-public:
-    
-    Animales();
-    ~Animales();
-    
-    void setColor();
-    void setSize();
-    
-    int count;
-    
-private:
-    
-    int pi;
+    std::unique_ptr<synth_OSC> ptrOSC[2];
+    int numChannels{0};
     
 };
