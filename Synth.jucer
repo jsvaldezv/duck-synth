@@ -14,6 +14,8 @@
       <FILE id="vS0jFJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{A3CA9E0C-1FED-CD04-79D1-18CCDE76C35D}" name="DSP">
+      <FILE id="a4LKOG" name="synth_OSC.cpp" compile="1" resource="0" file="Source/synth_OSC.cpp"/>
+      <FILE id="hjOnqg" name="synth_OSC.h" compile="0" resource="0" file="Source/synth_OSC.h"/>
       <FILE id="GM3STk" name="synth_Sound.cpp" compile="1" resource="0" file="Source/synth_Sound.cpp"/>
       <FILE id="FJtBt1" name="synth_Sound.h" compile="0" resource="0" file="Source/synth_Sound.h"/>
       <FILE id="MlebU4" name="synth_Voice.cpp" compile="1" resource="0" file="Source/synth_Voice.cpp"/>
