@@ -1,5 +1,7 @@
 #pragma once
 #include "math.h"
+#include <JuceHeader.h>
+
 
 class synth_OSC
 {
@@ -9,8 +11,9 @@ public:
     ~synth_OSC();
     
     void prepareOsc(float inSampleRate);
-    void processOSC(float* inAudio, float* outAudio, int inNumSamples);
+    void processOSC(float* inAudio, float* outAudio, int inNumSamples, int inTypeOne);
     void setFrequency(float inFreq);
+    float funcValue(int inTypeWave);
     
 private:
     

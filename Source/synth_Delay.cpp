@@ -1,14 +1,8 @@
 #include "synth_Delay.h"
 
-synth_Delay::synth_Delay()
-{
-    
-}
+synth_Delay::synth_Delay(){}
 
-synth_Delay::~synth_Delay()
-{
-    
-}
+synth_Delay::~synth_Delay(){}
 
 void synth_Delay::prepareDelay(double inSampleRate, int inSamplesPerBlock, int inNumChannels)
 {

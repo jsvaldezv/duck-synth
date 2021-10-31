@@ -64,6 +64,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initial
                                                                  0.99f,
                                                                  0.5f));
     
+    //TYPE OSC
+    params.push_back(std::make_unique<juce::AudioParameterChoice>("TYPE_ONE_ID",
+                                                                  "TYPE_ONE_NAME",
+                                                                  juce::StringArray("Sine", "Triangle"),0));
+    
     return {params.begin(),params.end()};
 }
 
@@ -183,7 +188,8 @@ void SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                              *parameters.getRawParameterValue("SUSTAIN_ID"),
                              *parameters.getRawParameterValue("RELEASE_ID"),
                              *parameters.getRawParameterValue("TIME_ID"),
-                             *parameters.getRawParameterValue("FEEDBACK_ID"));
+                             *parameters.getRawParameterValue("FEEDBACK_ID"),
+                             *parameters.getRawParameterValue("TYPE_ONE_ID"));
         }
     }
     

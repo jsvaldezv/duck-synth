@@ -55,11 +55,13 @@ void synth_Voice::getParams(float inVolume,
                             float inSustain,
                             float inRelease,
                             float inDelayTime,
-                            float inFeedback)
+                            float inFeedback,
+                            int inTypeOne)
 {
     volumen = inVolume;
     delayTime = inDelayTime;
     feedback = inFeedback;
+    typeOne = inTypeOne;
     setADSRParams(inAttack, inDecay, inSustain, inRelease);
 }
 
@@ -81,7 +83,8 @@ void synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int s
         
         ptrOSC[channel]->processOSC(channelData,
                                     channelData,
-                                    numSamples);
+                                    numSamples,
+                                    typeOne);
         
         ptrDelay[channel]->processDelay(channelData,
                                         channelData,

@@ -26,7 +26,8 @@ public:
                    float inSustain,
                    float inRelease,
                    float inDelayTime,
-                   float inFeedback);
+                   float inFeedback,
+                   int inTypeOne);
     
     void renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
     
@@ -46,6 +47,7 @@ private:
     // OSC
     std::unique_ptr<synth_OSC> ptrOSC[2];
     float frequency{0.0f};
+    int typeOne{0};
     
     // DELAY
     std::unique_ptr<synth_Delay> ptrDelay[2];
