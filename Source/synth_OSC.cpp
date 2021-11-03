@@ -51,6 +51,11 @@ float synth_OSC::funcValue(int inTypeWave)
         case 1:
             funcValue = (2.0f / pi) * asin(sin(2.0f * pi * fase));
             break;
+        case 2:
+            if (fase <= 0.5f)
+                funcValue = 1.0f;
+            else
+                funcValue = -1.0f;
     }
     
     return funcValue;

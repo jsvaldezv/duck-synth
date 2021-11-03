@@ -67,7 +67,12 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initial
     //TYPE OSC
     params.push_back(std::make_unique<juce::AudioParameterChoice>("TYPE_ONE_ID",
                                                                   "TYPE_ONE_NAME",
-                                                                  juce::StringArray("Sine", "Triangle"),0));
+                                                                  juce::StringArray("Sine", "Triangle", "Square"),0));
+    
+    //TYPE OSC
+    params.push_back(std::make_unique<juce::AudioParameterChoice>("TYPE_TWO_ID",
+                                                                  "TYPE_TWO_NAME",
+                                                                  juce::StringArray("Sine", "Triangle", "Square"),0));
     
     return {params.begin(),params.end()};
 }
