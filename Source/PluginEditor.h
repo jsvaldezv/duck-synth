@@ -15,6 +15,12 @@ public:
 
 private:
 
+    juce::Slider sliderVolumen;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> volumenAttachment;
+    
+    juce::ImageComponent background;
+    juce::Image backgroundImage;
+    
     SynthAudioProcessor& audioProcessor;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthAudioProcessorEditor)

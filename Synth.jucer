@@ -21,6 +21,9 @@
       <FILE id="MlebU4" name="synth_Voice.cpp" compile="1" resource="0" file="Source/synth_Voice.cpp"/>
       <FILE id="CgEnb5" name="synth_Voice.h" compile="0" resource="0" file="Source/synth_Voice.h"/>
     </GROUP>
+    <GROUP id="{DAD3F7E9-344D-ED8F-710F-F293DA8AE3C6}" name="Assets">
+      <FILE id="WbrvZY" name="back.jpeg" compile="0" resource="1" file="Assets/back.jpeg"/>
+    </GROUP>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
   <EXPORTFORMATS>
