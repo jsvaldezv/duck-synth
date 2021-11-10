@@ -1,6 +1,7 @@
 #pragma once
 #include <JuceHeader.h>
 #include "synth_Sound.h"
+
 #include "synth_OSC.h"
 
 class synth_Voice : public juce::SynthesiserVoice
@@ -17,20 +18,38 @@ public:
     void pitchWheelMoved (int newPitchWheelValue) override;
     
     void prepareToPlay (double sampleRate, int samplesPerBlock, int outputChannels);
+    
+    void getParams(float inVolume,
+                   float inAttack,
+                   float inDecay,
+                   float inSustain,
+                   float inRelease,
+                   float inDelayTime,
+                   float inFeedback,
+                   int inTypeOne);
+    
     void renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
     
+    float getInterpolatedSampleFree(float inSampleActual);
+    
+    void setADSRParams(float inAttack, float inDecay, float inSustain, float inRelease);
+    
 private:
-    
+
     double mySampleRate{0.0};
+    int numChannels{0};
     
-    const float pi{3.141592};
-    float fase[2] {0.0f};
-    float frequency{0.0f};
-    
+    // ADSR
     juce::ADSR myADSR;
     juce::ADSR::Parameters adsrParams;
     
+    // OSC
     std::unique_ptr<synth_OSC> ptrOSC[2];
-    int numChannels{0};
+    float frequency{0.0f};
+    int typeOne{0};
     
+    // DELAY
+    
+    // SLIDERS VALUES
+    float volumen{0.0f};
 };
