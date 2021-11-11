@@ -13,10 +13,8 @@ void synth_Voice::startNote (int midiNoteNumber, float velocity, juce::Synthesis
 {
     frequency = juce::MidiMessage::getMidiNoteInHertz(midiNoteNumber);
     
-    for(int i = 0; i < numChannels; i++)
-    {
-        ptrOSC[i]->setFrequency(frequency);
-    }
+    oscOne.setFrequency(frequency);
+    oscTwo.setFrequency(frequency);
     
     myADSR.noteOn();
 }
@@ -24,6 +22,9 @@ void synth_Voice::startNote (int midiNoteNumber, float velocity, juce::Synthesis
 void synth_Voice::stopNote (float velocity, bool allowTailOff)
 {
     myADSR.noteOff();
+    
+    if(!allowTailOff || !myADSR.isActive())
+        clearCurrentNote();
 }
 
 void synth_Voice::controllerMoved (int controllerNumber, int newControllerValue){}
@@ -33,18 +34,20 @@ void synth_Voice::pitchWheelMoved (int newPitchWheelValue){}
 void synth_Voice::prepareToPlay (double sampleRate, int samplesPerBlock, int outputChannels)
 {
     mySampleRate = sampleRate;
-    myADSR.setSampleRate(mySampleRate);
     numChannels = outputChannels;
     
-    for(int i = 0; i < outputChannels; i++)
-    {
-        ptrOSC[i] = std::make_unique<synth_OSC>();
-    }
+    myADSR.setSampleRate(mySampleRate);
     
-    for(int i = 0; i < outputChannels; i++)
-    {
-        ptrOSC[i]->prepareOsc(sampleRate);
-    }
+    juce::dsp::ProcessSpec spec;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.sampleRate = sampleRate;
+    spec.numChannels = outputChannels;
+    
+    oscOne.prepare(spec);
+    oscOne.setFrequency(440.0f);
+    
+    oscTwo.prepare(spec);
+    oscTwo.setFrequency(440.0f);
 }
 
 void synth_Voice::getParams(float inVolume,
@@ -54,10 +57,16 @@ void synth_Voice::getParams(float inVolume,
                             float inRelease,
                             float inDelayTime,
                             float inFeedback,
-                            int inTypeOne)
+                            int inTypeOne,
+                            int inTypeTwo)
 {
     volumen = inVolume;
     typeOne = inTypeOne;
+    typeTwo = inTypeTwo;
+    
+    setOscOne(typeOne);
+    setOscTwo(typeTwo);
+    
     setADSRParams(inAttack, inDecay, inSustain, inRelease);
 }
 
@@ -71,17 +80,58 @@ void synth_Voice::setADSRParams(float inAttack, float inDecay, float inSustain, 
     myADSR.setParameters(adsrParams);
 }
 
+void synth_Voice::setOscOne(int inTypeWave)
+{
+    switch(inTypeWave)
+    {
+        case 0:
+            oscOne.initialise({ [](float x){return std::sin(x);}});
+            break;
+        case 1:
+            oscOne.initialise({ [](float x){return x/M_PI;}});
+            break;
+        case 2:
+            oscOne.initialise({ [](float x){return x < 0.0f ? -1.0f : 1.0f;}});
+            break;
+    }
+}
+
+void synth_Voice::setOscTwo(int inTypeWave)
+{
+    switch(inTypeWave)
+    {
+        case 0:
+            oscTwo.initialise({ [](float x){return std::sin(x);}});
+            break;
+        case 1:
+            oscTwo.initialise({ [](float x){return x/M_PI;}});
+            break;
+        case 2:
+            oscTwo.initialise({ [](float x){return x < 0.0f ? -1.0f : 1.0f;}});
+            break;
+    }
+}
+
 void synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples)
 {
+    if(!isVoiceActive())
+        return;
+    
+    synthBuffer.setSize(outputBuffer.getNumChannels(), numSamples, false, false, true);
+    synthBuffer.clear();
+    
+    juce::dsp::AudioBlock<float> audioBlock {synthBuffer};
+    
+    oscOne.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
+    oscTwo.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
+    
+    myADSR.applyEnvelopeToBuffer(synthBuffer, 0, synthBuffer.getNumSamples());
+    
     for (int channel = 0; channel < outputBuffer.getNumChannels(); channel++)
     {
-        auto* channelData = outputBuffer.getWritePointer(channel);
+        outputBuffer.addFrom(channel, startSample, synthBuffer, channel, 0, numSamples);
         
-        ptrOSC[channel]->processOSC(channelData,
-                                    channelData,
-                                    numSamples,
-                                    typeOne);
+        if(!myADSR.isActive())
+            clearCurrentNote();
     }
-    
-    myADSR.applyEnvelopeToBuffer(outputBuffer, startSample, numSamples);
 }

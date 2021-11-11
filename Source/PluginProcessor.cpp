@@ -22,57 +22,57 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initial
     
     //VOLUMEN SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("VOLUME_ID",
-                                                                 "VOLUME_NAME",
+                                                                 "Volume",
                                                                  0.0f,
                                                                  1.0f,
                                                                  0.5f));
     
     //ATTACK SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK_ID",
-                                                                 "ATTACK_NAME",
+                                                                 "Attack",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     //SUSTAIN SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN_ID",
-                                                                 "SUSTAIN_NAME",
+                                                                 "Sustain",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     //DECAY SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY_ID",
-                                                                 "DECAY_NAME",
+                                                                 "Decay",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     //RELEASE SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE_ID",
-                                                                 "RELEASE_NAME",
+                                                                 "Release",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     //DELAY TIME SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("TIME_ID",
-                                                                 "TIME_NAME",
+                                                                 "Time",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     //FEEDBACK SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("FEEDBACK_ID",
-                                                                 "FEEDBACK_NAME",
+                                                                 "Feedback",
                                                                  0.01f,
                                                                  0.99f,
                                                                  0.5f));
     
     //TYPE OSC
     params.push_back(std::make_unique<juce::AudioParameterChoice>("TYPE_ONE_ID",
-                                                                  "TYPE_ONE_NAME",
+                                                                  "Type_One",
                                                                   juce::StringArray("Sine", "Triangle", "Square"),0));
     
     //TYPE OSC
     params.push_back(std::make_unique<juce::AudioParameterChoice>("TYPE_TWO_ID",
-                                                                  "TYPE_TWO_NAME",
-                                                                  juce::StringArray("Sine", "Triangle", "Square"),0));
+                                                                  "Type_Two",
+                                                                  juce::StringArray("Sine", "Triangle", "Square"),1));
     
     return {params.begin(),params.end()};
 }
@@ -194,7 +194,8 @@ void SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                              *parameters.getRawParameterValue("RELEASE_ID"),
                              *parameters.getRawParameterValue("TIME_ID"),
                              *parameters.getRawParameterValue("FEEDBACK_ID"),
-                             *parameters.getRawParameterValue("TYPE_ONE_ID"));
+                             *parameters.getRawParameterValue("TYPE_ONE_ID"),
+                             *parameters.getRawParameterValue("TYPE_TWO_ID"));
         }
     }
     
@@ -202,11 +203,6 @@ void SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                             midiMessages,
                             0,
                             buffer.getNumSamples());
-
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        //auto* channelData = buffer.getWritePointer (channel);
-    }
 }
 
 bool SynthAudioProcessor::hasEditor() const

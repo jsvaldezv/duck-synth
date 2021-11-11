@@ -4,7 +4,7 @@ synth_OSC::synth_OSC(){}
 
 synth_OSC::~synth_OSC(){}
 
-void synth_OSC::prepareOsc(float inSampleRate)
+void synth_OSC::prepareOsc(float inSampleRate, int inSamplesPerBlock, int inNumChannels)
 {
     mySampleRate = inSampleRate;
 }
