@@ -80,8 +80,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initial
 
 void SynthAudioProcessor::initSynth()
 {
-    mySynth.addSound(new synth_Sound());
-    mySynth.addVoice(new synth_Voice());
+    for (int i = 0; i < 4; i++)
+    {
+        mySynth.addSound(new synth_Sound());
+        mySynth.addVoice(new synth_Voice());
+    }
 }
 
 SynthAudioProcessor::~SynthAudioProcessor(){}
