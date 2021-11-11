@@ -2,8 +2,6 @@
 #include <JuceHeader.h>
 #include "synth_Sound.h"
 
-#include "synth_OSC.h"
-
 class synth_Voice : public juce::SynthesiserVoice
 {
 public:
@@ -27,13 +25,15 @@ public:
                    float inDelayTime,
                    float inFeedback,
                    int inTypeOne,
-                   int inTypeTwo);
+                   int inTypeTwo,
+                   float inWetReverb,
+                   float inRoom);
     
     void renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int startSample, int numSamples) override;
     
-    float getInterpolatedSampleFree(float inSampleActual);
-    
     void setADSRParams(float inAttack, float inDecay, float inSustain, float inRelease);
+    
+    void setReverbParams(float inWet, float inRoom);
     
     void setOscOne(int inTypeWave);
     void setOscTwo(int inTypeWave);
@@ -43,19 +43,28 @@ private:
     double mySampleRate{0.0};
     int numChannels{0};
     
-    // ADSR
-    juce::ADSR myADSR;
-    juce::ADSR::Parameters adsrParams;
-    
     // OSC
-    //std::unique_ptr<synth_OSC> ptrOSC[2];
     juce::dsp::Oscillator<float> oscOne { [](float x){return std::sin(x);}};
     juce::dsp::Oscillator<float> oscTwo { [](float x){return x/M_PI;}};
     float frequency{0.0f};
     int typeOne{0}, typeTwo{0};
     juce::AudioBuffer<float> synthBuffer;
     
-    // SLIDERS VALUES
+    // ADSR
+    juce::ADSR myADSR;
+    juce::ADSR::Parameters adsrParams;
+    
+    // VOLUMEN
+    juce::dsp::Gain<float> gain;
     float volumen{0.0f};
+    
+    // DELAY
+    juce::dsp::DelayLine<float> delay;
+    float delayValue{0.0f};
+    
+    // REVERB
+    juce::dsp::Reverb reverb;
+    juce::dsp::Reverb::Parameters reverbParams;
+    float reverbValue{0.0f};
 
 };

@@ -48,6 +48,14 @@ void synth_Voice::prepareToPlay (double sampleRate, int samplesPerBlock, int out
     
     oscTwo.prepare(spec);
     oscTwo.setFrequency(440.0f);
+    
+    gain.prepare(spec);
+    gain.setGainLinear(0.5f);
+    
+    delay.prepare(spec);
+    delay.setDelay(500);
+    
+    reverb.prepare(spec);
 }
 
 void synth_Voice::getParams(float inVolume,
@@ -58,16 +66,25 @@ void synth_Voice::getParams(float inVolume,
                             float inDelayTime,
                             float inFeedback,
                             int inTypeOne,
-                            int inTypeTwo)
+                            int inTypeTwo,
+                            float inWetReverb,
+                            float inRoom)
 {
     volumen = inVolume;
     typeOne = inTypeOne;
     typeTwo = inTypeTwo;
+    delayValue = inDelayTime;
+    
+    gain.setGainLinear(volumen);
     
     setOscOne(typeOne);
     setOscTwo(typeTwo);
     
     setADSRParams(inAttack, inDecay, inSustain, inRelease);
+    
+    delay.setDelay(delayValue);
+    
+    setReverbParams(inWetReverb, inRoom);
 }
 
 void synth_Voice::setADSRParams(float inAttack, float inDecay, float inSustain, float inRelease)
@@ -78,6 +95,14 @@ void synth_Voice::setADSRParams(float inAttack, float inDecay, float inSustain, 
     adsrParams.release = inRelease;
     
     myADSR.setParameters(adsrParams);
+}
+
+void synth_Voice::setReverbParams(float inWet, float inRoom)
+{
+    reverbParams.wetLevel = inWet;
+    reverbParams.roomSize = inRoom;
+    
+    reverb.setParameters(reverbParams);
 }
 
 void synth_Voice::setOscOne(int inTypeWave)
@@ -124,6 +149,9 @@ void synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int s
     
     oscOne.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     oscTwo.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
+    gain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
+    delay.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
+    reverb.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     
     myADSR.applyEnvelopeToBuffer(synthBuffer, 0, synthBuffer.getNumSamples());
     
