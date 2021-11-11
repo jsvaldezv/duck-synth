@@ -63,19 +63,6 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initial
                                                                   juce::StringArray("Sine", "Triangle", "Square"),1));
     
     //DELAY TIME SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("TIME_ID",
-                                                                 "Time",
-                                                                 0.1f,
-                                                                 3.0f,
-                                                                 0.5f));
-    //FEEDBACK SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("FEEDBACK_ID",
-                                                                 "Feedback",
-                                                                 0.01f,
-                                                                 0.99f,
-                                                                 0.5f));
-    
-    //DELAY TIME SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("WET_REVERB_ID",
                                                                  "Reverb",
                                                                  0.01f,
@@ -206,8 +193,6 @@ void SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::
                              *parameters.getRawParameterValue("DECAY_ID"),
                              *parameters.getRawParameterValue("SUSTAIN_ID"),
                              *parameters.getRawParameterValue("RELEASE_ID"),
-                             *parameters.getRawParameterValue("TIME_ID"),
-                             *parameters.getRawParameterValue("FEEDBACK_ID"),
                              *parameters.getRawParameterValue("TYPE_ONE_ID"),
                              *parameters.getRawParameterValue("TYPE_TWO_ID"),
                              *parameters.getRawParameterValue("WET_REVERB_ID"),

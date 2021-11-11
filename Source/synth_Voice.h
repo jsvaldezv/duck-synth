@@ -22,8 +22,6 @@ public:
                    float inDecay,
                    float inSustain,
                    float inRelease,
-                   float inDelayTime,
-                   float inFeedback,
                    int inTypeOne,
                    int inTypeTwo,
                    float inWetReverb,
@@ -57,10 +55,6 @@ private:
     // VOLUMEN
     juce::dsp::Gain<float> gain;
     float volumen{0.0f};
-    
-    // DELAY
-    juce::dsp::DelayLine<float> delay;
-    float delayValue{0.0f};
     
     // REVERB
     juce::dsp::Reverb reverb;

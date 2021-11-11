@@ -52,9 +52,6 @@ void synth_Voice::prepareToPlay (double sampleRate, int samplesPerBlock, int out
     gain.prepare(spec);
     gain.setGainLinear(0.5f);
     
-    delay.prepare(spec);
-    delay.setDelay(500);
-    
     reverb.prepare(spec);
 }
 
@@ -63,8 +60,6 @@ void synth_Voice::getParams(float inVolume,
                             float inDecay,
                             float inSustain,
                             float inRelease,
-                            float inDelayTime,
-                            float inFeedback,
                             int inTypeOne,
                             int inTypeTwo,
                             float inWetReverb,
@@ -73,7 +68,6 @@ void synth_Voice::getParams(float inVolume,
     volumen = inVolume;
     typeOne = inTypeOne;
     typeTwo = inTypeTwo;
-    delayValue = inDelayTime;
     
     gain.setGainLinear(volumen);
     
@@ -81,8 +75,6 @@ void synth_Voice::getParams(float inVolume,
     setOscTwo(typeTwo);
     
     setADSRParams(inAttack, inDecay, inSustain, inRelease);
-    
-    delay.setDelay(delayValue);
     
     setReverbParams(inWetReverb, inRoom);
 }
@@ -150,7 +142,6 @@ void synth_Voice::renderNextBlock (juce::AudioBuffer<float> &outputBuffer, int s
     oscOne.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     oscTwo.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     gain.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
-    delay.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     reverb.process(juce::dsp::ProcessContextReplacing<float> (audioBlock));
     
     myADSR.applyEnvelopeToBuffer(synthBuffer, 0, synthBuffer.getNumSamples());
