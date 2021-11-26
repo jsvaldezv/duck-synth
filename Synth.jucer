@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="IuFmR1" name="Synth" projectType="audioplug" useAppConfig="0"
+<JUCERPROJECT id="IuFmR1" name="DuckSynth" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn">
-  <MAINGROUP id="GG0CDB" name="Synth">
+              pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              companyName="jsvaldezv" companyCopyright="jsvaldezv">
+  <MAINGROUP id="GG0CDB" name="DuckSynth">
     <GROUP id="{635DD5E7-B3B9-BD5D-042D-1460AF00B1F9}" name="Source">
       <FILE id="wDdorm" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
@@ -29,8 +30,8 @@
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="Synth"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="Synth"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="DuckSynth"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="DuckSynth"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../../Documents/Programming/JUCE/modules"/>
@@ -50,8 +51,8 @@
     </XCODE_MAC>
     <VS2019 targetFolder="Builds/VisualStudio2019">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug"/>
-        <CONFIGURATION isDebug="0" name="Release"/>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="DuckSynth"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="DuckSynth"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_gui_extra"/>

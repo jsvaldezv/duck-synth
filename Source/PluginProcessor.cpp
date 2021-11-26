@@ -25,7 +25,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initial
                                                                  "Volume",
                                                                  0.0f,
                                                                  1.0f,
-                                                                 0.5f));
+                                                                 0.25f));
     
     //ATTACK SLIDER
     params.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK_ID",
