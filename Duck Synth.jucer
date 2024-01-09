@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="IuFmR1" name="Duck Synth" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
+              companyName="jsvaldezv" companyCopyright="jsvaldezv" version="1.0.0">
+  <MAINGROUP id="GG0CDB" name="Duck Synth">
+    <GROUP id="{635DD5E7-B3B9-BD5D-042D-1460AF00B1F9}" name="Source">
+      <FILE id="wDdorm" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="j4J7WT" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="TgDqpb" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="vS0jFJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+    <GROUP id="{A3CA9E0C-1FED-CD04-79D1-18CCDE76C35D}" name="DSP">
+      <FILE id="a4LKOG" name="synth_OSC.cpp" compile="1" resource="0" file="Source/synth_OSC.cpp"/>
+      <FILE id="hjOnqg" name="synth_OSC.h" compile="0" resource="0" file="Source/synth_OSC.h"/>
+      <FILE id="GM3STk" name="synth_Sound.cpp" compile="1" resource="0" file="Source/synth_Sound.cpp"/>
+      <FILE id="FJtBt1" name="synth_Sound.h" compile="0" resource="0" file="Source/synth_Sound.h"/>
+      <FILE id="MlebU4" name="synth_Voice.cpp" compile="1" resource="0" file="Source/synth_Voice.cpp"/>
+      <FILE id="CgEnb5" name="synth_Voice.h" compile="0" resource="0" file="Source/synth_Voice.h"/>
+    </GROUP>
+    <GROUP id="{DAD3F7E9-344D-ED8F-710F-F293DA8AE3C6}" name="Assets">
+      <FILE id="WbrvZY" name="back.jpeg" compile="0" resource="1" file="Assets/back.jpeg"/>
+    </GROUP>
+  </MAINGROUP>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <XCODE_MAC targetFolder="Builds/MacOSX">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Duck Synth"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Duck Synth"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="Libraries/JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Duck Synth"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Duck Synth"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="Libraries/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="Libraries/JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+  </MODULES>
+</JUCERPROJECT>

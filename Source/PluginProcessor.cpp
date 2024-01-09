@@ -21,55 +21,55 @@ juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initial
     std::vector <std::unique_ptr<juce::RangedAudioParameter>> params;
     
     //VOLUMEN SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("VOLUME_ID",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("VOLUME_ID", 1),
                                                                  "Volume",
                                                                  0.0f,
                                                                  1.0f,
                                                                  0.25f));
     
     //ATTACK SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("ATTACK_ID",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("ATTACK_ID", 1),
                                                                  "Attack",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     //SUSTAIN SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("SUSTAIN_ID",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SUSTAIN_ID", 1),
                                                                  "Sustain",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     //DECAY SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("DECAY_ID",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("DECAY_ID", 1),
                                                                  "Decay",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     //RELEASE SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("RELEASE_ID",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("RELEASE_ID", 1),
                                                                  "Release",
                                                                  0.1f,
                                                                  3.0f,
                                                                  0.5f));
     
     //TYPE OSC
-    params.push_back(std::make_unique<juce::AudioParameterChoice>("TYPE_ONE_ID",
+    params.push_back(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID("TYPE_ONE_ID", 1),
                                                                   "Type_One",
                                                                   juce::StringArray("Sine", "Triangle", "Square"),0));
     
     //TYPE OSC
-    params.push_back(std::make_unique<juce::AudioParameterChoice>("TYPE_TWO_ID",
+    params.push_back(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID("TYPE_TWO_ID", 1),
                                                                   "Type_Two",
                                                                   juce::StringArray("Sine", "Triangle", "Square"),1));
     
     //DELAY TIME SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("WET_REVERB_ID",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WET_REVERB_ID", 1),
                                                                  "Reverb",
                                                                  0.01f,
                                                                  1.0f,
                                                                  0.5f));
     //FEEDBACK SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>("ROOM_ID",
+    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("ROOM_ID", 1),
                                                                  "Room",
                                                                  0.01f,
                                                                  1.0f,
