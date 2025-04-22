@@ -1,6 +1,13 @@
-## Duck Synth
+# Duck Synth: Additive Synthesizer Plugin
 
-<img width="398" alt="duck" src="https://user-images.githubusercontent.com/47612276/143549478-91fe61da-5a88-49a8-8021-0d0c38138670.png">
+https://github.com/user-attachments/assets/9796310d-daf3-4112-a200-b8f9bc37deb6
 
-This is a synthesiser plug-in which has two oscillators with sine, triangle and square wave. It also has an JUCE ADSR, reverb amount and room size fx and volume. 
-The sampler was developed with JUCE and C++.
+This project is a synthesizer plugin developed in C++ using the JUCE framework. The main goal is to recreate a basic form of additive synthesis by combining two independent oscillators, allowing users to explore sound design through the layering of simple waveforms.
+
+🎛️ Key Features:
+
+- Additive synthesis with two oscillators
+- Waveform selection: sine, square, and triangle
+- ADSR envelope control to shape the amplitude over time
+- Reverb effect processing using JUCE’s juce::dsp module
+- Output gain control with a final volume slider
