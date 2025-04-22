@@ -13,13 +13,13 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="vS0jFJ" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
-    <GROUP id="{A3CA9E0C-1FED-CD04-79D1-18CCDE76C35D}" name="DSP">
-      <FILE id="a4LKOG" name="synth_OSC.cpp" compile="1" resource="0" file="Source/synth_OSC.cpp"/>
-      <FILE id="hjOnqg" name="synth_OSC.h" compile="0" resource="0" file="Source/synth_OSC.h"/>
-      <FILE id="GM3STk" name="synth_Sound.cpp" compile="1" resource="0" file="Source/synth_Sound.cpp"/>
-      <FILE id="FJtBt1" name="synth_Sound.h" compile="0" resource="0" file="Source/synth_Sound.h"/>
-      <FILE id="MlebU4" name="synth_Voice.cpp" compile="1" resource="0" file="Source/synth_Voice.cpp"/>
-      <FILE id="CgEnb5" name="synth_Voice.h" compile="0" resource="0" file="Source/synth_Voice.h"/>
+    <GROUP id="{7C4BD317-DFBD-0117-F9E7-5E37BD8B46DA}" name="DSP">
+      <FILE id="OZFUTN" name="SynthSound.h" compile="0" resource="0" file="Source/DSP/SynthSound.h"/>
+      <FILE id="ptkjOw" name="SynthVoice.cpp" compile="1" resource="0" file="Source/DSP/SynthVoice.cpp"/>
+      <FILE id="QnkDRv" name="SynthVoice.h" compile="0" resource="0" file="Source/DSP/SynthVoice.h"/>
+    </GROUP>
+    <GROUP id="{87C19773-A76F-3F19-98F2-D948F39504D5}" name="Helpers">
+      <FILE id="ys5LDi" name="Parameters.h" compile="0" resource="0" file="Source/Helpers/Parameters.h"/>
     </GROUP>
     <GROUP id="{DAD3F7E9-344D-ED8F-710F-F293DA8AE3C6}" name="Assets">
       <FILE id="WbrvZY" name="back.jpeg" compile="0" resource="1" file="Assets/back.jpeg"/>

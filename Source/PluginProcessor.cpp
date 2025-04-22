@@ -1,7 +1,7 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-SynthAudioProcessor::SynthAudioProcessor()
+DuckSynthAudioProcessor::DuckSynthAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
@@ -10,91 +10,29 @@ SynthAudioProcessor::SynthAudioProcessor()
                       #endif
                        .withOutput ("Output", juce::AudioChannelSet::stereo(), true)
                      #endif
-                       ), parameters(*this, nullptr, "PARAMETERS", initializeGUI())
+                       ), apvts (*this, nullptr, "Parameters", createParameters())
 #endif
 {
     initSynth();
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout SynthAudioProcessor::initializeGUI()
+void DuckSynthAudioProcessor::initSynth()
 {
-    std::vector <std::unique_ptr<juce::RangedAudioParameter>> params;
-    
-    //VOLUMEN SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("VOLUME_ID", 1),
-                                                                 "Volume",
-                                                                 0.0f,
-                                                                 1.0f,
-                                                                 0.25f));
-    
-    //ATTACK SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("ATTACK_ID", 1),
-                                                                 "Attack",
-                                                                 0.1f,
-                                                                 3.0f,
-                                                                 0.5f));
-    //SUSTAIN SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("SUSTAIN_ID", 1),
-                                                                 "Sustain",
-                                                                 0.1f,
-                                                                 3.0f,
-                                                                 0.5f));
-    //DECAY SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("DECAY_ID", 1),
-                                                                 "Decay",
-                                                                 0.1f,
-                                                                 3.0f,
-                                                                 0.5f));
-    //RELEASE SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("RELEASE_ID", 1),
-                                                                 "Release",
-                                                                 0.1f,
-                                                                 3.0f,
-                                                                 0.5f));
-    
-    //TYPE OSC
-    params.push_back(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID("TYPE_ONE_ID", 1),
-                                                                  "Type_One",
-                                                                  juce::StringArray("Sine", "Triangle", "Square"),0));
-    
-    //TYPE OSC
-    params.push_back(std::make_unique<juce::AudioParameterChoice>(juce::ParameterID("TYPE_TWO_ID", 1),
-                                                                  "Type_Two",
-                                                                  juce::StringArray("Sine", "Triangle", "Square"),1));
-    
-    //DELAY TIME SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("WET_REVERB_ID", 1),
-                                                                 "Reverb",
-                                                                 0.01f,
-                                                                 1.0f,
-                                                                 0.5f));
-    //FEEDBACK SLIDER
-    params.push_back(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID("ROOM_ID", 1),
-                                                                 "Room",
-                                                                 0.01f,
-                                                                 1.0f,
-                                                                 0.5f));
-    
-    return {params.begin(),params.end()};
-}
-
-void SynthAudioProcessor::initSynth()
-{
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < NUM_VOICES; i++)
     {
-        mySynth.addSound(new synth_Sound());
-        mySynth.addVoice(new synth_Voice());
+        synth.addSound (new SynthSound());
+        synth.addVoice (new SynthVoice());
     }
 }
 
-SynthAudioProcessor::~SynthAudioProcessor(){}
+DuckSynthAudioProcessor::~DuckSynthAudioProcessor(){}
 
-const juce::String SynthAudioProcessor::getName() const
+const juce::String DuckSynthAudioProcessor::getName() const
 {
     return JucePlugin_Name;
 }
 
-bool SynthAudioProcessor::acceptsMidi() const
+bool DuckSynthAudioProcessor::acceptsMidi() const
 {
    #if JucePlugin_WantsMidiInput
     return true;
@@ -103,7 +41,7 @@ bool SynthAudioProcessor::acceptsMidi() const
    #endif
 }
 
-bool SynthAudioProcessor::producesMidi() const
+bool DuckSynthAudioProcessor::producesMidi() const
 {
    #if JucePlugin_ProducesMidiOutput
     return true;
@@ -112,7 +50,7 @@ bool SynthAudioProcessor::producesMidi() const
    #endif
 }
 
-bool SynthAudioProcessor::isMidiEffect() const
+bool DuckSynthAudioProcessor::isMidiEffect() const
 {
    #if JucePlugin_IsMidiEffect
     return true;
@@ -121,45 +59,45 @@ bool SynthAudioProcessor::isMidiEffect() const
    #endif
 }
 
-double SynthAudioProcessor::getTailLengthSeconds() const
+double DuckSynthAudioProcessor::getTailLengthSeconds() const
 {
     return 0.0;
 }
 
-int SynthAudioProcessor::getNumPrograms()
+int DuckSynthAudioProcessor::getNumPrograms()
 {
     return 1;
 }
 
-int SynthAudioProcessor::getCurrentProgram()
+int DuckSynthAudioProcessor::getCurrentProgram()
 {
     return 0;
 }
 
-void SynthAudioProcessor::setCurrentProgram (int index){}
+void DuckSynthAudioProcessor::setCurrentProgram (int index){}
 
-const juce::String SynthAudioProcessor::getProgramName (int index)
+const juce::String DuckSynthAudioProcessor::getProgramName (int index)
 {
     return {};
 }
 
-void SynthAudioProcessor::changeProgramName (int index, const juce::String& newName){}
+void DuckSynthAudioProcessor::changeProgramName (int index, const juce::String& newName) {}
 
-void SynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
+void DuckSynthAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    mySynth.setCurrentPlaybackSampleRate(sampleRate);
+    synth.setCurrentPlaybackSampleRate (sampleRate);
     
-    for(int i = 0; i < mySynth.getNumVoices(); i++)
+    for (int i = 0; i < synth.getNumVoices(); i++)
     {
-        if(auto voice = dynamic_cast<synth_Voice*>(mySynth.getVoice(i)))
-            voice->prepareToPlay(sampleRate, samplesPerBlock, getTotalNumOutputChannels());
+        if (auto voice = dynamic_cast<SynthVoice*> (synth.getVoice(i)))
+            voice->prepareToPlay (sampleRate, samplesPerBlock, getTotalNumOutputChannels());
     }
 }
 
-void SynthAudioProcessor::releaseResources(){}
+void DuckSynthAudioProcessor::releaseResources(){}
 
 #ifndef JucePlugin_PreferredChannelConfigurations
-bool SynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
+bool DuckSynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) const
 {
   #if JucePlugin_IsMidiEffect
     juce::ignoreUnused (layouts);
@@ -178,52 +116,49 @@ bool SynthAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) co
 }
 #endif
 
-void SynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
+void DuckSynthAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     juce::ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
+    auto totalNumInputChannels = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    for (int i = 0; i < mySynth.getNumVoices(); i++)
+    for (int i = 0; i < synth.getNumVoices(); i++)
     {
-        if(auto voice = dynamic_cast<synth_Voice*>(mySynth.getVoice(i)))
+        if (auto voice = dynamic_cast<SynthVoice*> (synth.getVoice(i)))
         {
-            voice->getParams(*parameters.getRawParameterValue("VOLUME_ID"),
-                             *parameters.getRawParameterValue("ATTACK_ID"),
-                             *parameters.getRawParameterValue("DECAY_ID"),
-                             *parameters.getRawParameterValue("SUSTAIN_ID"),
-                             *parameters.getRawParameterValue("RELEASE_ID"),
-                             *parameters.getRawParameterValue("TYPE_ONE_ID"),
-                             *parameters.getRawParameterValue("TYPE_TWO_ID"),
-                             *parameters.getRawParameterValue("WET_REVERB_ID"),
-                             *parameters.getRawParameterValue("ROOM_ID"));
+            voice->getParams (apvts.getRawParameterValue (VOLUME)->load(),
+                              apvts.getRawParameterValue (ATTACK)->load(),
+                              apvts.getRawParameterValue (DECAY)->load(),
+                              apvts.getRawParameterValue (SUSTAIN)->load(),
+                              apvts.getRawParameterValue (RELEASE)->load(),
+                              apvts.getRawParameterValue (TYPE_ONE)->load(),
+                              apvts.getRawParameterValue (TYPE_TWO)->load(),
+                              apvts.getRawParameterValue (REVERB_WET)->load(),
+                              apvts.getRawParameterValue (ROOM)->load());
         }
     }
     
-    mySynth.renderNextBlock(buffer,
-                            midiMessages,
-                            0,
-                            buffer.getNumSamples());
+    synth.renderNextBlock (buffer, midiMessages, 0, buffer.getNumSamples());
 }
 
-bool SynthAudioProcessor::hasEditor() const
+bool DuckSynthAudioProcessor::hasEditor() const
 {
     return true;
 }
 
-juce::AudioProcessorEditor* SynthAudioProcessor::createEditor()
+juce::AudioProcessorEditor* DuckSynthAudioProcessor::createEditor()
 {
-    return new SynthAudioProcessorEditor (*this);
+    return new DuckSynthAudioProcessorEditor (*this);
 }
 
-void SynthAudioProcessor::getStateInformation (juce::MemoryBlock& destData){}
+void DuckSynthAudioProcessor::getStateInformation (juce::MemoryBlock& destData){}
 
-void SynthAudioProcessor::setStateInformation (const void* data, int sizeInBytes){}
+void DuckSynthAudioProcessor::setStateInformation (const void* data, int sizeInBytes){}
 
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
-    return new SynthAudioProcessor();
+    return new DuckSynthAudioProcessor();
 }

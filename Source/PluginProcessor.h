@@ -1,14 +1,15 @@
 #pragma once
 #include <JuceHeader.h>
-#include "synth_Sound.h"
-#include "synth_Voice.h"
+#include "Helpers/Parameters.h"
+#include "DSP/SynthSound.h"
+#include "DSP/SynthVoice.h"
 
-class SynthAudioProcessor  : public juce::AudioProcessor
+class DuckSynthAudioProcessor : public juce::AudioProcessor
 {
 public:
     
-    SynthAudioProcessor();
-    ~SynthAudioProcessor() override;
+    DuckSynthAudioProcessor();
+    ~DuckSynthAudioProcessor() override;
 
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
@@ -32,15 +33,16 @@ public:
     void changeProgramName (int index, const juce::String& newName) override;
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-
-    juce::AudioProcessorValueTreeState parameters;
-    juce::AudioProcessorValueTreeState::ParameterLayout initializeGUI();
     
-    void initSynth();
+    juce::AudioProcessorValueTreeState& getAPVTS() { return apvts; }
 
 private:
     
-    juce::Synthesiser mySynth;
+    juce::AudioProcessorValueTreeState apvts;
     
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthAudioProcessor)
+    void initSynth();
+    
+    juce::Synthesiser synth;
+    
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DuckSynthAudioProcessor)
 };

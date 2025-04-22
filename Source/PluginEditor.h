@@ -1,24 +1,26 @@
 #pragma once
-
 #include <JuceHeader.h>
 #include "PluginProcessor.h"
 
-class SynthAudioProcessorEditor  : public juce::AudioProcessorEditor
+class DuckSynthAudioProcessorEditor : public juce::AudioProcessorEditor
 {
 public:
     
-    SynthAudioProcessorEditor (SynthAudioProcessor&);
-    ~SynthAudioProcessorEditor() override;
+    DuckSynthAudioProcessorEditor (DuckSynthAudioProcessor&);
+    ~DuckSynthAudioProcessorEditor() override;
 
     void paint (juce::Graphics&) override;
     void resized() override;
     
-    void paintADSR();
-    void paintReverb();
+    void prepareSlider (juce::Slider&, juce::Label&, juce::String sliderID);
 
 private:
 
-    // VOLUME
+    // Background
+    juce::ImageComponent background;
+    juce::Image backgroundImage;
+    
+    // Volume
     juce::Slider sliderVolumen;
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> volumenAttachment;
     juce::Label volLabel;
@@ -28,23 +30,16 @@ private:
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> attackAttachment, decayAttachment, sustainAttachment, releaseAttachment;
     juce::Label attackLabel, decayLabel, sustainLabel, releaseLabel;
     
-    // REVERB
+    // Reverb
     juce::Slider sliderRoom, sliderWet;
     std::unique_ptr <juce::AudioProcessorValueTreeState::SliderAttachment> roomAttachment, wetAttachment;
     juce::Label roomLabel, wetLabel;
     
-    // OSCILLATORS
-    juce::ComboBox oscOne;
-    std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscOneAttachment;
+    // Oscillators
+    juce::ComboBox oscOne, oscTwo;
+    std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscOneAttachment, oscTwoAttachment;
     
-    juce::ComboBox oscTwo;
-    std::unique_ptr <juce::AudioProcessorValueTreeState::ComboBoxAttachment> oscTwoAttachment;
-    
-    // BACKGROUND
-    juce::ImageComponent background;
-    juce::Image backgroundImage;
-    
-    SynthAudioProcessor& audioProcessor;
+    DuckSynthAudioProcessor& audioProcessor;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SynthAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DuckSynthAudioProcessorEditor)
 };
